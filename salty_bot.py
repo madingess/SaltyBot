@@ -43,7 +43,7 @@ class SaltyBot:
     def continuous_betting(self):
         """Main operating loop to perform betting when available"""
         while True:
-            if self.can_bet():
+            if self.can_bet() and not self.bet_placed():
                 # Select wager amount and team
                 wager_amount = self.get_wager_amount()
                 wager_team = self.select_wager_team()
@@ -54,14 +54,18 @@ class SaltyBot:
                 self.browser.find_element_by_id(wager_team).click()
                 print("Bet " + str(wager_amount) + " on " + wager_team)
             else:
-                print("Ongoing fight. Cannot bet.")
+                print("Ongoing fight or bet already placed. Cannot bet.")
 
             self.wait_to_wager()
 
     def can_bet(self):
         """Determine and return whether betting is open"""
+        return "display: none" not in self.browser.find_element_by_id("wager").get_attribute('style')
+
+    def bet_placed(self):
+        """Determine and return whether a bet has been placed"""
         try:
-            self.browser.find_element_by_id("wager").send_keys(0)
+            self.browser.find_element_by_id("betconfirm")
             return True
         except ElementNotInteractableException:
             return False
