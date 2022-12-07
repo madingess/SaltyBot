@@ -1,3 +1,8 @@
+# User Credentials
 email: email@domain.com
 username: user
 password: pass
+
+# Minimum wager to make. If the balance is lower than the minimum, the bot wagers all-in.
+# This must be a whole number
+minimum_wager: 200

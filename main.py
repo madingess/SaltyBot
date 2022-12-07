@@ -30,7 +30,7 @@ def get_configuration():
         except yaml.YAMLError as exc:
             raise exc
 
-    mandatory_params = ['email', 'username', 'password']
+    mandatory_params = ['email', 'username', 'password', 'minimum_wager']
     for mandatory_param in mandatory_params:
         if mandatory_param not in parameters:
             raise Exception(mandatory_param + ' is not inside the yml file!')
@@ -38,6 +38,8 @@ def get_configuration():
     assert validate_email(parameters['email'])
     assert len(str(parameters['username'])) > 0
     assert len(str(parameters['password'])) > 0
+
+    assert int(parameters['minimum_wager']) > 0
 
     return parameters
 

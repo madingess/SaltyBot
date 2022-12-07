@@ -15,6 +15,7 @@ class SaltyBot:
         self.email = parameters['email']
         self.username = parameters['username']
         self.password = parameters['password']
+        self.minimum_wager = int(parameters['minimum_wager'])
 
     def login(self):
         """Login to SaltyBet"""
@@ -56,11 +57,10 @@ class SaltyBot:
 
     def get_wager_amount(self):
         """Determine and return how many salty bucks to wager"""
-        minimum = 100
         balance = self.get_balance()
-        if balance < minimum:
+        if balance < self.minimum_wager:
             return balance
-        return minimum
+        return self.minimum_wager
 
     def get_balance(self):
         """Find and return the current balance of Salty Bucks"""
