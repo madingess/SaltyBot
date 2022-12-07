@@ -1,4 +1,4 @@
-# SaltyRoller
+# SaltyBot
 
 A bot for automated betting at saltybet.com.
 

@@ -9,7 +9,7 @@ TEAM_RED = "player1"
 TEAM_BLUE = "player2"
 
 
-class SaltyRoller:
+class SaltyBot:
     def __init__(self, parameters, driver):
         self.browser = driver
         self.email = parameters['email']

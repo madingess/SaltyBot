@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from validate_email import validate_email
-from salty_roller import SaltyRoller
+from salty_bot import SaltyBot
 
 
 def init_browser():
@@ -46,6 +46,6 @@ if __name__ == '__main__':
     parameters = get_configuration()
     browser = init_browser()
 
-    bot = SaltyRoller(parameters, browser)
+    bot = SaltyBot(parameters, browser)
     bot.login()
     bot.continuous_betting()
