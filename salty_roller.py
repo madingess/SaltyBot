@@ -36,6 +36,7 @@ class SaltyRoller:
                 wager_team = self.select_wager_team()
 
                 # Make wager
+                self.browser.find_element_by_id("wager").clear()
                 self.browser.find_element_by_id("wager").send_keys(wager_amount)
                 self.browser.find_element_by_id(wager_team).click()
                 print("Bet " + str(wager_amount) + " on " + wager_team)
