@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from validate_email import validate_email
-from salty_bot import SaltyBot
+from salty_bot import SaltyBot, WAGER_STRATEGIES
 
 
 def init_browser():
@@ -30,7 +30,7 @@ def get_configuration():
         except yaml.YAMLError as exc:
             raise exc
 
-    mandatory_params = ['email', 'username', 'password', 'minimum_wager']
+    mandatory_params = ['email', 'username', 'password', 'wager_strategy', 'constant_wager']
     for mandatory_param in mandatory_params:
         if mandatory_param not in parameters:
             raise Exception(mandatory_param + ' is not inside the yml file!')
@@ -39,7 +39,8 @@ def get_configuration():
     assert len(str(parameters['username'])) > 0
     assert len(str(parameters['password'])) > 0
 
-    assert int(parameters['minimum_wager']) > 0
+    assert str(parameters['wager_strategy']) in WAGER_STRATEGIES
+    assert int(parameters['constant_wager']) > 0
 
     return parameters
 
