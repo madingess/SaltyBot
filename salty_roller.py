@@ -2,6 +2,7 @@ import random
 import time
 
 from selenium.common.exceptions import TimeoutException, ElementNotInteractableException
+from selenium.webdriver.common.by import By
 
 # Constants
 TEAM_RED = "player1"
@@ -55,7 +56,15 @@ class SaltyRoller:
 
     def get_wager_amount(self):
         """Determine and return how many salty bucks to wager"""
-        return 100
+        minimum = 100
+        balance = self.get_balance()
+        if balance < minimum:
+            return balance
+        return minimum
+
+    def get_balance(self):
+        """Find and return the current balance of Salty Bucks"""
+        return int(self.browser.find_element(By.ID, "balance").get_attribute("innerHTML").replace(",", ""))
 
     def select_wager_team(self):
         """Determine and return which team on whom to wager"""
