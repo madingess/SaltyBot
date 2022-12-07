@@ -24,6 +24,7 @@ Choose a wager strategy
 ```yaml
 # Strategy to use when wagering. Options are as follows.
 #  constant : Wager a constant value. All-in if balance is lower than constant value.
+#  all-in : Wager full account balance.
 wager_strategy: constant
 
 # Constant amount to wager when using the constant wager strategy.

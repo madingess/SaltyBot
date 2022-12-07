@@ -8,8 +8,10 @@ from selenium.webdriver.common.by import By
 TEAM_RED = "player1"
 TEAM_BLUE = "player2"
 WAGER_STRATEGY_CONSTANT = "constant"
+WAGER_STRATEGY_ALLIN = "all-in"
 WAGER_STRATEGIES = [
-    WAGER_STRATEGY_CONSTANT
+    WAGER_STRATEGY_CONSTANT,
+    WAGER_STRATEGY_ALLIN
 ]
 
 
@@ -63,16 +65,21 @@ class SaltyBot:
     def get_wager_amount(self):
         """Determine and return how many salty bucks to wager"""
         strategies_switch = {
-            WAGER_STRATEGY_CONSTANT: self.wage_strategy_constant()
+            WAGER_STRATEGY_CONSTANT: self.wager_strategy_constant(),
+            WAGER_STRATEGY_ALLIN: self.wager_strategy_allin()
         }
-        return strategies_switch.get(self.wager_strategy, self.wage_strategy_constant())  # default to constant strategy
+        return strategies_switch.get(self.wager_strategy, self.wager_strategy_constant())  # default to constant strategy
 
-    def wage_strategy_constant(self):
+    def wager_strategy_constant(self):
         """Wager a constant value. All-in if balance is lower than constant value"""
         balance = self.get_balance()
         if balance < self.constant_wager:
             return balance
         return self.constant_wager
+
+    def wager_strategy_allin(self):
+        """Wager full balance."""
+        return self.get_balance()
 
     def get_balance(self):
         """Find and return the current balance of Salty Bucks"""
