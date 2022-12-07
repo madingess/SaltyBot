@@ -7,11 +7,14 @@ from selenium.webdriver.common.by import By
 # Constants
 TEAM_RED = "player1"
 TEAM_BLUE = "player2"
+
 WAGER_STRATEGY_CONSTANT = "constant"
 WAGER_STRATEGY_ALLIN = "all-in"
+WAGER_STRATEGY_PERCENTAGE = "percentage"
 WAGER_STRATEGIES = [
     WAGER_STRATEGY_CONSTANT,
-    WAGER_STRATEGY_ALLIN
+    WAGER_STRATEGY_ALLIN,
+    WAGER_STRATEGY_PERCENTAGE
 ]
 
 
@@ -23,6 +26,7 @@ class SaltyBot:
         self.password = parameters['password']
         self.wager_strategy = parameters['wager_strategy']
         self.constant_wager = int(parameters['constant_wager'])
+        self.percentage_wager = parameters['percentage_wager']
 
     def login(self):
         """Login to SaltyBet"""
@@ -64,11 +68,12 @@ class SaltyBot:
 
     def get_wager_amount(self):
         """Determine and return how many salty bucks to wager"""
-        strategies_switch = {
+        strategies = {
             WAGER_STRATEGY_CONSTANT: self.wager_strategy_constant(),
-            WAGER_STRATEGY_ALLIN: self.wager_strategy_allin()
+            WAGER_STRATEGY_ALLIN: self.wager_strategy_allin(),
+            WAGER_STRATEGY_PERCENTAGE: self.wager_strategy_percentage()
         }
-        return strategies_switch.get(self.wager_strategy, self.wager_strategy_constant())  # default to constant strategy
+        return strategies.get(self.wager_strategy, self.wager_strategy_constant())  # default to constant strategy
 
     def wager_strategy_constant(self):
         """Wager a constant value. All-in if balance is lower than constant value"""
@@ -80,6 +85,10 @@ class SaltyBot:
     def wager_strategy_allin(self):
         """Wager full balance."""
         return self.get_balance()
+
+    def wager_strategy_percentage(self):
+        """Wager a percentage of the account balance."""
+        return int(self.get_balance() * self.percentage_wager)
 
     def get_balance(self):
         """Find and return the current balance of Salty Bucks"""

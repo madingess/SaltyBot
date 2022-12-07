@@ -41,6 +41,8 @@ def get_configuration():
 
     assert str(parameters['wager_strategy']) in WAGER_STRATEGIES
     assert int(parameters['constant_wager']) > 0
+    assert parameters['percentage_wager'] > 0
+    assert parameters['percentage_wager'] < 1
 
     return parameters
 
